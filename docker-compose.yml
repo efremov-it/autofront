@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    networks:
+      app-network:
+        aliases:
+          - my-app.test.internal
+
+  backend:
+    build: ./backend
+    environment:
+      - PORT=8080
+    ports:
+      - '8080:8080'
+    networks:
+      app-network:
+        aliases:
+          - my-api.test.internal
+
+networks:
+  app-network:
+    # driver: bridge
